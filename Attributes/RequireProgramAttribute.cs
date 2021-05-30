@@ -2,21 +2,17 @@
 
 namespace ServerManagerFramework
 {
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
-    internal class RequireProgramAttribute : Attribute
+    [AttributeUsage(AttributeTargets.Assembly)]
+    public class RequireProgramAttribute : Attribute
     {
         public string ProgramName { get; }
-#pragma warning disable IDE0052 // Remove unread private members
-        private Version MinVersion { get; }
-#pragma warning restore IDE0052 // Remove unread private members
-#pragma warning disable IDE0052 // Remove unread private members
-        private Version MaxVersion { get; }
-#pragma warning restore IDE0052 // Remove unread private members
+        public Version MinVersion { get; }
+        public Version MaxVersion { get; }
+
         public RequireProgramAttribute(string programName)
         {
             ProgramName = programName;
         }
-
         public RequireProgramAttribute(string programName, Version minVersion)
         {
             ProgramName = programName;
