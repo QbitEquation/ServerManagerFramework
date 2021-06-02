@@ -39,7 +39,7 @@ namespace ServerManagerFramework
 
         public string FindValue(string key)
         {
-            if (keyValues.ContainsKey(key))
+            if (KeyValues.ContainsKey(key))
             {
                 return KeyValues[key];
             }
