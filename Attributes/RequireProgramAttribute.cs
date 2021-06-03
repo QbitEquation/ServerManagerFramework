@@ -3,15 +3,15 @@
 namespace ServerManagerFramework
 {
     /// <summary>
-    /// Indicated that a server requires certain applications installed in order to run.
+    /// Indicated that a server requires certain program installed in order to run.
     /// </summary>
     [AttributeUsage(AttributeTargets.Assembly)]
-    public class RequireApplicationAttribute : Attribute
+    public class RequireProgramAttribute : Attribute
     {
         /// <summary>
-        /// The name of the application that is required.
+        /// The name of the program that is required.
         /// </summary>
-        public string ApplicationName { get; }
+        public string ProgramName { get; }
 
         /// <summary>
         /// The minimum version that should be installed.
@@ -24,50 +24,50 @@ namespace ServerManagerFramework
         public Version MaxVersion { get; }
 
         /// <summary>
-        /// The direct download URL of the application.
+        /// The direct download URL of the program.
         /// </summary>
         public string DownloadURL { get; }
 
         /// <summary>
         /// Initializes a new instance of this class.
         /// </summary>
-        /// <param name="programName">The name of the required application.</param>
-        public RequireApplicationAttribute(string programName)
+        /// <param name="programName">The name of the required program.</param>
+        public RequireProgramAttribute(string programName)
         {
-            ApplicationName = programName;
+            ProgramName = programName;
         }
 
         /// <summary>
         /// Initializes a new instance of this class.
         /// </summary>
-        /// <param name="programName">The name of the required application.</param>
-        /// <param name="downloadURL">The direct download URL of the required application. This should directly download the installer. The installer should be silently executeable if possible.</param>
-        public RequireApplicationAttribute(string programName, string downloadURL)
+        /// <param name="programName">The name of the required program.</param>
+        /// <param name="downloadURL">The direct download URL of the required program. This should directly download the installer. The installer should be silently executeable if possible.</param>
+        public RequireProgramAttribute(string programName, string downloadURL)
         {
-            ApplicationName = programName;
+            ProgramName = programName;
             DownloadURL = downloadURL; 
         }
 
         /// <summary>
         /// Initializes a new instance of this class.
         /// </summary>
-        /// <param name="programName">The name of the required application.</param>
-        /// <param name="minVersion">The minimum version of the required application.</param>
-        public RequireApplicationAttribute(string programName, Version minVersion)
+        /// <param name="programName">The name of the required program.</param>
+        /// <param name="minVersion">The minimum version of the required program.</param>
+        public RequireProgramAttribute(string programName, Version minVersion)
         {
-            ApplicationName = programName;
+            ProgramName = programName;
             MinVersion = minVersion;
         }
 
         /// <summary>
         /// Initializes a new instance of this class.
         /// </summary>
-        /// <param name="programName">The name of the required application.</param>
-        /// <param name="minVersion">The minimum version of the required application.</param>
-        /// <param name="downloadURL">The direct download URL of the required application. This should directly download the installer. The installer should be silently executeable if possible.</param>
-        public RequireApplicationAttribute(string programName, Version minVersion, string downloadURL)
+        /// <param name="programName">The name of the required program.</param>
+        /// <param name="minVersion">The minimum version of the required program.</param>
+        /// <param name="downloadURL">The direct download URL of the required program. This should directly download the installer. The installer should be silently executeable if possible.</param>
+        public RequireProgramAttribute(string programName, Version minVersion, string downloadURL)
         {
-            ApplicationName = programName;
+            ProgramName = programName;
             MinVersion = minVersion;
             DownloadURL = downloadURL;
         }
@@ -75,12 +75,12 @@ namespace ServerManagerFramework
         /// <summary>
         /// Initializes a new instance of this class.
         /// </summary>
-        /// <param name="programName">The name of the required application.</param>
-        /// <param name="minVersion">The minimum version of the required application.</param>
-        /// <param name="maxVersion">The maximum version of the required application.</param>
-        public RequireApplicationAttribute(string programName, Version minVersion, Version maxVersion)
+        /// <param name="programName">The name of the required program.</param>
+        /// <param name="minVersion">The minimum version of the required program.</param>
+        /// <param name="maxVersion">The maximum version of the required program.</param>
+        public RequireProgramAttribute(string programName, Version minVersion, Version maxVersion)
         {
-            ApplicationName = programName;
+            ProgramName = programName;
             MinVersion = minVersion;
             MaxVersion = maxVersion;
         }
@@ -88,13 +88,13 @@ namespace ServerManagerFramework
         /// <summary>
         /// Initializes a new instance of this class.
         /// </summary>
-        /// <param name="programName">The name of the required application.</param>
-        /// <param name="minVersion">The minimum version of the required application.</param>
-        /// <param name="maxVersion">The maximum version of the required application.</param>
-        /// <param name="downloadURL">The direct download URL of the required application. This should directly download the installer. The installer should be silently executeable if possible.</param>
-        public RequireApplicationAttribute(string programName, Version minVersion, Version maxVersion, string downloadURL)
+        /// <param name="programName">The name of the required program.</param>
+        /// <param name="minVersion">The minimum version of the required program.</param>
+        /// <param name="maxVersion">The maximum version of the required program.</param>
+        /// <param name="downloadURL">The direct download URL of the required program. This should directly download the installer. The installer should be silently executeable if possible.</param>
+        public RequireProgramAttribute(string programName, Version minVersion, Version maxVersion, string downloadURL)
         {
-            ApplicationName = programName;
+            ProgramName = programName;
             MinVersion = minVersion;
             MaxVersion = maxVersion;
             DownloadURL = downloadURL;

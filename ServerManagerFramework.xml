@@ -79,75 +79,75 @@
             </summary>
             <param name="iconPath">The path and name of the icon file.</param>
         </member>
-        <member name="T:ServerManagerFramework.RequireApplicationAttribute">
+        <member name="T:ServerManagerFramework.RequireProgramAttribute">
             <summary>
-            Indicated that a server requires certain applications installed in order to run.
+            Indicated that a server requires certain program installed in order to run.
             </summary>
         </member>
-        <member name="P:ServerManagerFramework.RequireApplicationAttribute.ApplicationName">
+        <member name="P:ServerManagerFramework.RequireProgramAttribute.ProgramName">
             <summary>
-            The name of the application that is required.
+            The name of the program that is required.
             </summary>
         </member>
-        <member name="P:ServerManagerFramework.RequireApplicationAttribute.MinVersion">
+        <member name="P:ServerManagerFramework.RequireProgramAttribute.MinVersion">
             <summary>
             The minimum version that should be installed.
             </summary>
         </member>
-        <member name="P:ServerManagerFramework.RequireApplicationAttribute.MaxVersion">
+        <member name="P:ServerManagerFramework.RequireProgramAttribute.MaxVersion">
             <summary>
             The Maximum version that can be installed.
             </summary>
         </member>
-        <member name="P:ServerManagerFramework.RequireApplicationAttribute.DownloadURL">
+        <member name="P:ServerManagerFramework.RequireProgramAttribute.DownloadURL">
             <summary>
-            The direct download URL of the application.
+            The direct download URL of the program.
             </summary>
         </member>
-        <member name="M:ServerManagerFramework.RequireApplicationAttribute.#ctor(System.String)">
+        <member name="M:ServerManagerFramework.RequireProgramAttribute.#ctor(System.String)">
             <summary>
             Initializes a new instance of this class.
             </summary>
-            <param name="programName">The name of the required application.</param>
+            <param name="programName">The name of the required program.</param>
         </member>
-        <member name="M:ServerManagerFramework.RequireApplicationAttribute.#ctor(System.String,System.String)">
+        <member name="M:ServerManagerFramework.RequireProgramAttribute.#ctor(System.String,System.String)">
             <summary>
             Initializes a new instance of this class.
             </summary>
-            <param name="programName">The name of the required application.</param>
-            <param name="downloadURL">The direct download URL of the required application. This should directly download the installer. The installer should be silently executeable if possible.</param>
+            <param name="programName">The name of the required program.</param>
+            <param name="downloadURL">The direct download URL of the required program. This should directly download the installer. The installer should be silently executeable if possible.</param>
         </member>
-        <member name="M:ServerManagerFramework.RequireApplicationAttribute.#ctor(System.String,System.Version)">
+        <member name="M:ServerManagerFramework.RequireProgramAttribute.#ctor(System.String,System.Version)">
             <summary>
             Initializes a new instance of this class.
             </summary>
-            <param name="programName">The name of the required application.</param>
-            <param name="minVersion">The minimum version of the required application.</param>
+            <param name="programName">The name of the required program.</param>
+            <param name="minVersion">The minimum version of the required program.</param>
         </member>
-        <member name="M:ServerManagerFramework.RequireApplicationAttribute.#ctor(System.String,System.Version,System.String)">
+        <member name="M:ServerManagerFramework.RequireProgramAttribute.#ctor(System.String,System.Version,System.String)">
             <summary>
             Initializes a new instance of this class.
             </summary>
-            <param name="programName">The name of the required application.</param>
-            <param name="minVersion">The minimum version of the required application.</param>
-            <param name="downloadURL">The direct download URL of the required application. This should directly download the installer. The installer should be silently executeable if possible.</param>
+            <param name="programName">The name of the required program.</param>
+            <param name="minVersion">The minimum version of the required program.</param>
+            <param name="downloadURL">The direct download URL of the required program. This should directly download the installer. The installer should be silently executeable if possible.</param>
         </member>
-        <member name="M:ServerManagerFramework.RequireApplicationAttribute.#ctor(System.String,System.Version,System.Version)">
+        <member name="M:ServerManagerFramework.RequireProgramAttribute.#ctor(System.String,System.Version,System.Version)">
             <summary>
             Initializes a new instance of this class.
             </summary>
-            <param name="programName">The name of the required application.</param>
-            <param name="minVersion">The minimum version of the required application.</param>
-            <param name="maxVersion">The maximum version of the required application.</param>
+            <param name="programName">The name of the required program.</param>
+            <param name="minVersion">The minimum version of the required program.</param>
+            <param name="maxVersion">The maximum version of the required program.</param>
         </member>
-        <member name="M:ServerManagerFramework.RequireApplicationAttribute.#ctor(System.String,System.Version,System.Version,System.String)">
+        <member name="M:ServerManagerFramework.RequireProgramAttribute.#ctor(System.String,System.Version,System.Version,System.String)">
             <summary>
             Initializes a new instance of this class.
             </summary>
-            <param name="programName">The name of the required application.</param>
-            <param name="minVersion">The minimum version of the required application.</param>
-            <param name="maxVersion">The maximum version of the required application.</param>
-            <param name="downloadURL">The direct download URL of the required application. This should directly download the installer. The installer should be silently executeable if possible.</param>
+            <param name="programName">The name of the required program.</param>
+            <param name="minVersion">The minimum version of the required program.</param>
+            <param name="maxVersion">The maximum version of the required program.</param>
+            <param name="downloadURL">The direct download URL of the required program. This should directly download the installer. The installer should be silently executeable if possible.</param>
         </member>
         <member name="T:ServerManagerFramework.Config">
             <summary>
