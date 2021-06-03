@@ -1,7 +1,13 @@
 ﻿namespace ServerManagerFramework
 {
+    /// <summary>
+    /// Base class for all servers.
+    /// </summary>
     public interface IHasDirectory
     {
-        public string Directory { get; }
+        /// <summary>
+        /// The directory of this server.
+        /// </summary>
+        string Directory { get; init; }
     }
 }

@@ -1,8 +1,13 @@
 ﻿namespace ServerManagerFramework
 {
+    /// <summary>
+    /// The base object for console line entries.
+    /// </summary>
     public interface IHasString
     {
-        public string String { get; }
-        public void SetString(string value);
+        /// <summary>
+        /// The string that contains the console line data.
+        /// </summary>
+        public string String { get; init; }
     }
 }

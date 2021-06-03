@@ -2,20 +2,30 @@
 
 namespace ServerManagerFramework
 {
+    /// <summary>
+    /// Enables filtering for a class that inherits from ServerManagerFramework.IHasDirectory.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
     public class ComboBoxButtonAttribute : Attribute
     {
-        public readonly string className;
-        public readonly bool useDefault = false;
+        /// <summary>
+        /// The name of the ComboBox item that should be displayed.
+        /// Null if the default class name should be used.
+        /// </summary>
+        public string ClassName { get; }
 
-        public ComboBoxButtonAttribute()
-        {
-            useDefault = true;
-        }
+        /// <summary>
+        /// Use default class name as ComboBox item name.
+        /// </summary>
+        public ComboBoxButtonAttribute() { }
 
+        /// <summary>
+        /// Use a custom name for the ComboBox item.
+        /// </summary>
+        /// <param name="name">The name of the ComboBox item that should be displayed.</param>
         public ComboBoxButtonAttribute(string name)
         {
-            className = name;
+            ClassName = name;
         }
     }
 }

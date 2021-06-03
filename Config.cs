@@ -3,6 +3,9 @@ using System.Text;
 
 namespace ServerManagerFramework
 {
+    /// <summary>
+    /// Encoder and decoder class for server-manager.prefs files.
+    /// </summary>
     public struct Config
     {
         private Dictionary<string, string> keyValues;
@@ -20,6 +23,10 @@ namespace ServerManagerFramework
             }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the Config class.
+        /// </summary>
+        /// <param name="text">Text to decode.</param>
         public Config(string text)
         {
             keyValues = new();
@@ -37,7 +44,12 @@ namespace ServerManagerFramework
             }
         }
 
-        public string FindValue(string key)
+        /// <summary>
+        /// Gets a value for a given key. Returns null if none is found.
+        /// </summary>
+        /// <param name="key">The key to search for.</param>
+        /// <returns></returns>
+        public string GetValue(string key)
         {
             if (KeyValues.ContainsKey(key))
             {
@@ -49,7 +61,13 @@ namespace ServerManagerFramework
             }
         }
 
-        public void AddValue(string key, string value)
+        /// <summary>
+        /// Sets the value of a given key or creates a new one.
+        /// </summary>
+        /// <param name="key">The key for the value.</param>
+        /// <param name="value">The value that should be stored.</param>
+        /// <returns>A new instance with applied changes.</returns>
+        public Config SetValue(string key, string value)
         {
             if (KeyValues.ContainsKey(key))
             {
@@ -59,13 +77,26 @@ namespace ServerManagerFramework
             {
                 KeyValues.Add(key, value);
             }
+
+            return this;
         }
 
-        public void RemoveValue(string key)
+        /// <summary>
+        /// Removes a value.
+        /// </summary>
+        /// <param name="key">The key of the value that should be removed.</param>
+        /// <returns>A new instance with applied changes.</returns>
+        public Config RemoveValue(string key)
         {
             KeyValues.Remove(key);
+
+            return this;
         }
 
+        /// <summary>
+        /// Converts the value of this instance to a System.String.
+        /// </summary>
+        /// <returns>A string whose value is the same as this instance.</returns>
         public override string ToString()
         {
             StringBuilder text = new();

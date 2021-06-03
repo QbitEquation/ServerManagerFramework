@@ -2,8 +2,15 @@
 
 namespace ServerManagerFramework
 {
-    public interface ICommandLineOutput<T> where T : IHasString
+    /// <summary>
+    /// Enables UI implemenatation of getting console output from a server.
+    /// </summary>
+    /// <typeparam name="TCommandLineObject">The object that should be used to store the command line strings</typeparam>
+    public interface ICommandLineOutput<TCommandLineObject> where TCommandLineObject : IHasString
     {
-        public IEnumerable<T> ConsoleLines { get; }
+        /// <summary>
+        /// Gets all console lines of a server.
+        /// </summary>
+        public IEnumerable<TCommandLineObject> ConsoleLines { get; }
     }
 }

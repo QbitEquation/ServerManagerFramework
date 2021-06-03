@@ -4,5 +4,509 @@
         <name>ServerManagerFramework</name>
     </assembly>
     <members>
+        <member name="T:ServerManagerFramework.Arguments">
+            <summary>
+            Start arguments helper class for starting servers.
+            </summary>
+        </member>
+        <member name="M:ServerManagerFramework.Arguments.Add(System.String,ServerManagerFramework.ArgumentPosition)">
+            <summary>
+            Add an argument.
+            </summary>
+            <param name="argument">The argument to add.</param>
+            <param name="argumentPosition">The position of the argument.</param>
+        </member>
+        <member name="M:ServerManagerFramework.Arguments.Insert(System.Int32,System.String,ServerManagerFramework.ArgumentPosition)">
+            <summary>
+            Insert an argument at a certain position.
+            </summary>
+            <param name="index">The position where the argument should be inserted.</param>
+            <param name="argument">The argument to insert.</param>
+            <param name="argumentPosition">The argument block position.</param>
+        </member>
+        <member name="M:ServerManagerFramework.Arguments.Remove(System.String)">
+            <summary>
+            Removes an argument.
+            </summary>
+            <param name="arg">The argument to remove.</param>
+        </member>
+        <member name="M:ServerManagerFramework.Arguments.ToString">
+            <summary>
+            Convert this class to a string to add to process start args.
+            </summary>
+            <returns>This class converted to a string.</returns>
+        </member>
+        <member name="T:ServerManagerFramework.ComboBoxButtonAttribute">
+            <summary>
+            Enables filtering for a class that inherits from ServerManagerFramework.IHasDirectory.
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.ComboBoxButtonAttribute.ClassName">
+            <summary>
+            The name of the ComboBox item that should be displayed.
+            Null if the default class name should be used.
+            </summary>
+        </member>
+        <member name="M:ServerManagerFramework.ComboBoxButtonAttribute.#ctor">
+            <summary>
+            Use default class name as ComboBox item name.
+            </summary>
+        </member>
+        <member name="M:ServerManagerFramework.ComboBoxButtonAttribute.#ctor(System.String)">
+            <summary>
+            Use a custom name for the ComboBox item.
+            </summary>
+            <param name="name">The name of the ComboBox item that should be displayed.</param>
+        </member>
+        <member name="T:ServerManagerFramework.HasIconAttribute">
+            <summary>
+            Indicates that a class has an icon that should be displayed in serverInfo.
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.HasIconAttribute.IconPath">
+            <summary>
+            The path of the icon file of a server. From ServerFileName/[iconName.fileExtension]
+            </summary>
+        </member>
+        <member name="M:ServerManagerFramework.HasIconAttribute.#ctor">
+            <summary>
+            Use default icon name. [server-icon.png]
+            </summary>
+        </member>
+        <member name="M:ServerManagerFramework.HasIconAttribute.#ctor(System.String)">
+            <summary>
+            Specify a custom icon name.
+            </summary>
+            <param name="iconPath">The path and name of the icon file.</param>
+        </member>
+        <member name="T:ServerManagerFramework.RequireApplicationAttribute">
+            <summary>
+            Indicated that a server requires certain applications installed in order to run.
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.RequireApplicationAttribute.ApplicationName">
+            <summary>
+            The name of the application that is required.
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.RequireApplicationAttribute.MinVersion">
+            <summary>
+            The minimum version that should be installed.
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.RequireApplicationAttribute.MaxVersion">
+            <summary>
+            The Maximum version that can be installed.
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.RequireApplicationAttribute.DownloadURL">
+            <summary>
+            The direct download URL of the application.
+            </summary>
+        </member>
+        <member name="M:ServerManagerFramework.RequireApplicationAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of this class.
+            </summary>
+            <param name="programName">The name of the required application.</param>
+        </member>
+        <member name="M:ServerManagerFramework.RequireApplicationAttribute.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of this class.
+            </summary>
+            <param name="programName">The name of the required application.</param>
+            <param name="downloadURL">The direct download URL of the required application. This should directly download the installer. The installer should be silently executeable if possible.</param>
+        </member>
+        <member name="M:ServerManagerFramework.RequireApplicationAttribute.#ctor(System.String,System.Version)">
+            <summary>
+            Initializes a new instance of this class.
+            </summary>
+            <param name="programName">The name of the required application.</param>
+            <param name="minVersion">The minimum version of the required application.</param>
+        </member>
+        <member name="M:ServerManagerFramework.RequireApplicationAttribute.#ctor(System.String,System.Version,System.String)">
+            <summary>
+            Initializes a new instance of this class.
+            </summary>
+            <param name="programName">The name of the required application.</param>
+            <param name="minVersion">The minimum version of the required application.</param>
+            <param name="downloadURL">The direct download URL of the required application. This should directly download the installer. The installer should be silently executeable if possible.</param>
+        </member>
+        <member name="M:ServerManagerFramework.RequireApplicationAttribute.#ctor(System.String,System.Version,System.Version)">
+            <summary>
+            Initializes a new instance of this class.
+            </summary>
+            <param name="programName">The name of the required application.</param>
+            <param name="minVersion">The minimum version of the required application.</param>
+            <param name="maxVersion">The maximum version of the required application.</param>
+        </member>
+        <member name="M:ServerManagerFramework.RequireApplicationAttribute.#ctor(System.String,System.Version,System.Version,System.String)">
+            <summary>
+            Initializes a new instance of this class.
+            </summary>
+            <param name="programName">The name of the required application.</param>
+            <param name="minVersion">The minimum version of the required application.</param>
+            <param name="maxVersion">The maximum version of the required application.</param>
+            <param name="downloadURL">The direct download URL of the required application. This should directly download the installer. The installer should be silently executeable if possible.</param>
+        </member>
+        <member name="T:ServerManagerFramework.Config">
+            <summary>
+            Encoder and decoder class for server-manager.prefs files.
+            </summary>
+        </member>
+        <member name="M:ServerManagerFramework.Config.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the Config class.
+            </summary>
+            <param name="text">Text to decode.</param>
+        </member>
+        <member name="M:ServerManagerFramework.Config.GetValue(System.String)">
+            <summary>
+            Gets a value for a given key. Returns null if none is found.
+            </summary>
+            <param name="key">The key to search for.</param>
+            <returns></returns>
+        </member>
+        <member name="M:ServerManagerFramework.Config.SetValue(System.String,System.String)">
+            <summary>
+            Sets the value of a given key or creates a new one.
+            </summary>
+            <param name="key">The key for the value.</param>
+            <param name="value">The value that should be stored.</param>
+            <returns>A new instance with applied changes.</returns>
+        </member>
+        <member name="M:ServerManagerFramework.Config.RemoveValue(System.String)">
+            <summary>
+            Removes a value.
+            </summary>
+            <param name="key">The key of the value that should be removed.</param>
+            <returns>A new instance with applied changes.</returns>
+        </member>
+        <member name="M:ServerManagerFramework.Config.ToString">
+            <summary>
+            Converts the value of this instance to a System.String.
+            </summary>
+            <returns>A string whose value is the same as this instance.</returns>
+        </member>
+        <member name="T:ServerManagerFramework.ArgumentPosition">
+            <summary>
+            The main block position of an argument.
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.ArgumentPosition.left">
+            <summary>
+            Argument is always one of the first ones to be read.
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.ArgumentPosition.center">
+            <summary>
+            Main block for most arguments.
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.ArgumentPosition.right">
+            <summary>
+            Argument is always one of the last ones to be read.
+            </summary>
+        </member>
+        <member name="T:ServerManagerFramework.MessageType">
+            <summary>
+            The type of a console line message.
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.MessageType.normal">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.MessageType.highlighted">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.MessageType.warning">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.MessageType.error">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.MessageType.green">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ServerManagerFramework.State">
+            <summary>
+            The state of a server.
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.State.starting">
+            <summary>
+            The server is starting.
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.State.started">
+            <summary>
+            The server is running.
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.State.stopping">
+            <summary>
+            The server is stopping.
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.State.stopped">
+            <summary>
+            The server is stopped.
+            </summary>
+        </member>
+        <member name="T:ServerManagerFramework.StateChangedEventArgs">
+            <summary>
+            EventArgs that contain the new ServerManagerFramework.State of a server.
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.StateChangedEventArgs.ServerState">
+            <summary>
+            The new server ServerManagerFramework.State.
+            </summary>
+        </member>
+        <member name="M:ServerManagerFramework.StateChangedEventArgs.#ctor(ServerManagerFramework.State)">
+            <summary>
+            Initializes a new instance of this class.
+            </summary>
+            <param name="serverState">The new ServerManagerFramework.State of a server.</param>
+        </member>
+        <member name="T:ServerManagerFramework.StateChangedEventHandler">
+            <summary>
+            EventHandler for handling changes of a server ServerManagerFramework.State.
+            </summary>
+            <param name="sender">The server that changed its ServerManagerFramework.State.</param>
+            <param name="e">EventArgs with the new server ServerManagerFramework.State.</param>
+        </member>
+        <member name="T:ServerManagerFramework.ProcessNotRunningException">
+            <summary>
+            The exception that is thrown when a process is not running even though it should be.
+            </summary>
+        </member>
+        <member name="M:ServerManagerFramework.ProcessNotRunningException.#ctor">
+            <summary>
+            Initializes a new instance of this class.
+            </summary>
+        </member>
+        <member name="T:ServerManagerFramework.ProcessRunningException">
+            <summary>
+            The exception that is thrown when a process is running even though it should not be.
+            </summary>
+        </member>
+        <member name="M:ServerManagerFramework.ProcessRunningException.#ctor">
+            <summary>
+            Initializes a new instance of this class.
+            </summary>
+        </member>
+        <member name="T:ServerManagerFramework.ICommandLineInput">
+            <summary>
+            Enables UI implemenatation of inputting console text to a server.
+            </summary>
+        </member>
+        <member name="M:ServerManagerFramework.ICommandLineInput.WriteLine(System.String)">
+            <summary>
+            Writes a line of text to a server process.
+            </summary>
+            <param name="value">The string to write.</param>
+        </member>
+        <member name="T:ServerManagerFramework.ICommandLineOutput`1">
+            <summary>
+            Enables UI implemenatation of getting console output from a server.
+            </summary>
+            <typeparam name="TCommandLineObject">The object that should be used to store the command line strings</typeparam>
+        </member>
+        <member name="P:ServerManagerFramework.ICommandLineOutput`1.ConsoleLines">
+            <summary>
+            Gets all console lines of a server.
+            </summary>
+        </member>
+        <member name="T:ServerManagerFramework.IHasDirectory">
+            <summary>
+            Base class for all servers.
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.IHasDirectory.Directory">
+            <summary>
+            The directory of this server.
+            </summary>
+        </member>
+        <member name="T:ServerManagerFramework.IHasString">
+            <summary>
+            The base object for console line entries.
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.IHasString.String">
+            <summary>
+            The string that contains the console line data.
+            </summary>
+        </member>
+        <member name="T:ServerManagerFramework.IInstallable">
+            <summary>
+            Indicates that a server can be installed.
+            </summary>
+        </member>
+        <member name="M:ServerManagerFramework.IInstallable.Install">
+            <summary>
+            Installes this server.
+            </summary>
+        </member>
+        <member name="T:ServerManagerFramework.IServer">
+            <summary>
+            Base class for all servers that can be started or stopped.
+            </summary>
+        </member>
+        <member name="M:ServerManagerFramework.IServer.Start">
+            <summary>
+            Start this server.
+            </summary>
+        </member>
+        <member name="M:ServerManagerFramework.IServer.Stop">
+            <summary>
+            Stop this server.
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.IServer.State">
+            <summary>
+            The current ServerManagerFramework.State of this server.
+            </summary>
+        </member>
+        <member name="E:ServerManagerFramework.IServer.StateChanged">
+            <summary>
+            Fires when the ServerManagerFramework.State of this server changes.
+            </summary>
+        </member>
+        <member name="T:ServerManagerFramework.NewableString">
+            <summary>
+            Newable version of ServerManagerFramework.IHasString
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.NewableString.String">
+            <summary>
+            The string that contains the console line data.
+            </summary>
+        </member>
+        <member name="T:ServerManagerFramework.ServerProcess`1">
+            <summary>
+            Base class for server processes that includes input and output handling.
+            </summary>
+            <typeparam name="TCommandLineObject">The object that should be used to store the command line strings</typeparam>
+        </member>
+        <member name="M:ServerManagerFramework.ServerProcess`1.#ctor(System.String)">
+            <summary>
+            Initializes a new Instance of this class.
+            </summary>
+            <param name="fileName">The name of the file that is used to start the server.</param>
+        </member>
+        <member name="M:ServerManagerFramework.ServerProcess`1.WriteLine(System.String)">
+            <summary>
+            Write a line to the InputStream.
+            </summary>
+            <param name="value">The string to write.</param>
+        </member>
+        <member name="F:ServerManagerFramework.ServerProcess`1.consoleLines">
+            <summary>
+            The output lines.
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.ServerProcess`1.ConsoleLines">
+            <summary>
+            The output lines.
+            </summary>
+        </member>
+        <member name="M:ServerManagerFramework.ServerProcess`1.OutputDataReceived(System.Object,System.Diagnostics.DataReceivedEventArgs)">
+            <summary>
+            Catches output data of this process.
+            </summary>
+            <param name="sender">The process that generated output.</param>
+            <param name="e">The process output data.</param>
+        </member>
+        <member name="M:ServerManagerFramework.ServerProcess`1.Start">
+            <summary>
+            Start this server.
+            </summary>
+        </member>
+        <member name="T:ServerManagerFramework.ServerProcess">
+            <summary>
+            Base class for server processes. Not required to run a server.
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.ServerProcess.Directory">
+            <summary>
+            The directory of this server.
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.ServerProcess.Process">
+            <summary>
+            The System.Diagnostics.Process of this server.
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.ServerProcess.StartInfo">
+            <summary>
+            The System.Diagnostics.ProcessStartInfo of this System.Diagnostics.Process.
+            </summary>
+        </member>
+        <member name="M:ServerManagerFramework.ServerProcess.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of this class.
+            </summary>
+            <param name="fileName">The name of the file that is used to start this server.</param>
+        </member>
+        <member name="P:ServerManagerFramework.ServerProcess.Arguments">
+            <summary>
+            The start ServerManagerFramework.Arguments of this server.
+            </summary>
+        </member>
+        <member name="M:ServerManagerFramework.ServerProcess.AddArgument(System.String)">
+            <summary>
+            Add an argument.
+            </summary>
+            <param name="argument">The argument to add.</param>
+        </member>
+        <member name="M:ServerManagerFramework.ServerProcess.InsertArgument(System.Int32,System.String)">
+            <summary>
+            Insert an argument at a certain position.
+            </summary>
+            <param name="index">The position of this argument.</param>
+            <param name="argument">The argument to insert.</param>
+        </member>
+        <member name="M:ServerManagerFramework.ServerProcess.RemoveArgument(System.String)">
+            <summary>
+            Remove an argument.
+            </summary>
+            <param name="argument">The argument to remove.</param>
+        </member>
+        <member name="P:ServerManagerFramework.ServerProcess.State">
+            <summary>
+            The current ServerManagerFramework.State of this server.
+            </summary>
+        </member>
+        <member name="E:ServerManagerFramework.ServerProcess.StateChanged">
+            <summary>
+            Fires when the ServerManagerFramework.State of this server changes.
+            </summary>
+        </member>
+        <member name="M:ServerManagerFramework.ServerProcess.Start">
+            <summary>
+            Start this server.
+            </summary>
+        </member>
+        <member name="M:ServerManagerFramework.ServerProcess.Stop">
+            <summary>
+            Stop this server.
+            </summary>
+        </member>
+        <member name="M:ServerManagerFramework.ServerProcess.DestroyProcess">
+            <summary>
+            Destroy this server process.
+            </summary>
+        </member>
     </members>
 </doc>

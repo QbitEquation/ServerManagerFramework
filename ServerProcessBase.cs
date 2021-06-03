@@ -1,23 +1,45 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Management;
 using System.Windows;
 
 namespace ServerManagerFramework
 {
+    /// <summary>
+    /// Base class for server processes. Not required to run a server.
+    /// </summary>
     public class ServerProcess : IServer
     {
-        public string Directory { get; }
+        /// <summary>
+        /// The directory of this server.
+        /// </summary>
+        public string Directory 
+        {
+            get => StartInfo.WorkingDirectory;
+            init
+            {
+                StartInfo.WorkingDirectory = value;
+            }
+        }
+
+        /// <summary>
+        /// The System.Diagnostics.Process of this server.
+        /// </summary>
         protected Process Process { get; set; }
+
+        /// <summary>
+        /// The System.Diagnostics.ProcessStartInfo of this System.Diagnostics.Process.
+        /// </summary>
         protected ProcessStartInfo StartInfo { get; } = new ProcessStartInfo();
+
         int ProcessID { get; set; } = -1;
 
-        public ServerProcess(string workingDirectory, string fileName)
+        /// <summary>
+        /// Initializes a new instance of this class.
+        /// </summary>
+        /// <param name="fileName">The name of the file that is used to start this server.</param>
+        public ServerProcess(string fileName)
         {
-            Directory = workingDirectory;
-
             StartInfo.UseShellExecute = false;
-            StartInfo.WorkingDirectory = Directory;
             StartInfo.FileName = fileName;
 
             Application.Current.Exit += OnExit;
@@ -26,16 +48,34 @@ namespace ServerManagerFramework
         #region Arguments
         private readonly Arguments arguments = new();
 
+        /// <summary>
+        /// The start ServerManagerFramework.Arguments of this server.
+        /// </summary>
         protected Arguments Arguments => arguments;
 
+        /// <summary>
+        /// Add an argument.
+        /// </summary>
+        /// <param name="argument">The argument to add.</param>
         public void AddArgument(string argument)
         {
             Arguments.Add(argument, ArgumentPosition.center);
         }
+
+        /// <summary>
+        /// Insert an argument at a certain position.
+        /// </summary>
+        /// <param name="index">The position of this argument.</param>
+        /// <param name="argument">The argument to insert.</param>
         public void InsertArgument(int index, string argument)
         {
             Arguments.Insert(index, argument, ArgumentPosition.center);
         }
+
+        /// <summary>
+        /// Remove an argument.
+        /// </summary>
+        /// <param name="argument">The argument to remove.</param>
         public void RemoveArgument(string argument)
         {
             Arguments.Remove(argument);
@@ -44,6 +84,10 @@ namespace ServerManagerFramework
 
         #region Starting / Stopping
         private State state = State.stopped;
+
+        /// <summary>
+        /// The current ServerManagerFramework.State of this server.
+        /// </summary>
         public State State 
         { 
             get
@@ -58,8 +102,15 @@ namespace ServerManagerFramework
                 StateChanged?.Invoke(this, new StateChangedEventArgs(state));
             }
         }
+
+        /// <summary>
+        /// Fires when the ServerManagerFramework.State of this server changes.
+        /// </summary>
         public event StateChangedEventHandler StateChanged;
 
+        /// <summary>
+        /// Start this server.
+        /// </summary>
         public virtual void Start()
         {
             if (State != State.stopped || string.IsNullOrWhiteSpace(StartInfo.FileName))
@@ -80,6 +131,10 @@ namespace ServerManagerFramework
             ProcessID = Process.Id;
             State = State.started;
         }
+
+        /// <summary>
+        /// Stop this server.
+        /// </summary>
         public virtual void Stop()
         {
             if (State == State.stopped)
@@ -89,6 +144,10 @@ namespace ServerManagerFramework
 
             DestroyProcess();
         }
+
+        /// <summary>
+        /// Destroy this server process.
+        /// </summary>
         protected void DestroyProcess()
         {
             if (Process.HasExited == false)

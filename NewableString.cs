@@ -1,12 +1,13 @@
 ﻿namespace ServerManagerFramework
 {
+    /// <summary>
+    /// Newable version of ServerManagerFramework.IHasString
+    /// </summary>
     public struct NewableString : IHasString
     {
-        public string String { get; private set; }
-
-        public void SetString(string str)
-        {
-            String = str;
-        }
+        /// <summary>
+        /// The string that contains the console line data.
+        /// </summary>
+        public string String { get; init; }
     }
 }

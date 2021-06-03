@@ -3,12 +3,20 @@ using System.Text;
 
 namespace ServerManagerFramework
 {
+    /// <summary>
+    /// Start arguments helper class for starting servers.
+    /// </summary>
     public class Arguments
     {
         private List<string> LeftArguments { get; } = new();
         private List<string> CenterArguments { get; } = new();
         private List<string> RightArguments { get; } = new();
 
+        /// <summary>
+        /// Add an argument.
+        /// </summary>
+        /// <param name="argument">The argument to add.</param>
+        /// <param name="argumentPosition">The position of the argument.</param>
         public void Add(string argument, ArgumentPosition argumentPosition)
         {
             if (LeftArguments.Contains(argument)
@@ -32,6 +40,12 @@ namespace ServerManagerFramework
             }
         }
 
+        /// <summary>
+        /// Insert an argument at a certain position.
+        /// </summary>
+        /// <param name="index">The position where the argument should be inserted.</param>
+        /// <param name="argument">The argument to insert.</param>
+        /// <param name="argumentPosition">The argument block position.</param>
         public void Insert(int index, string argument, ArgumentPosition argumentPosition)
         {
             if (LeftArguments.Contains(argument)
@@ -55,6 +69,10 @@ namespace ServerManagerFramework
             }
         }
 
+        /// <summary>
+        /// Removes an argument.
+        /// </summary>
+        /// <param name="arg">The argument to remove.</param>
         public void Remove(string arg)
         {
             LeftArguments.Remove(arg);
@@ -62,6 +80,10 @@ namespace ServerManagerFramework
             RightArguments.Remove(arg);
         }
 
+        /// <summary>
+        /// Convert this class to a string to add to process start args.
+        /// </summary>
+        /// <returns>This class converted to a string.</returns>
         public override string ToString()
         {
             StringBuilder startArguments = new();
