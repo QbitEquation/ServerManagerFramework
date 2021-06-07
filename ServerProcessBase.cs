@@ -12,7 +12,7 @@ namespace ServerManagerFramework
         /// <summary>
         /// The directory of this server.
         /// </summary>
-        public string Directory 
+        public string Directory
         {
             get => StartInfo.WorkingDirectory;
             init
@@ -31,7 +31,7 @@ namespace ServerManagerFramework
         /// </summary>
         protected ProcessStartInfo StartInfo { get; } = new ProcessStartInfo();
 
-        int ProcessID { get; set; } = -1;
+        private int ProcessID { get; set; } = -1;
 
         /// <summary>
         /// Initializes a new instance of this class.
@@ -88,15 +88,15 @@ namespace ServerManagerFramework
         /// <summary>
         /// The current ServerManagerFramework.State of this server.
         /// </summary>
-        public State State 
-        { 
-            get
-            {
-                return state;
-            }
+        public State State
+        {
+            get => state;
             protected set
             {
-                if (value == state) return;
+                if (value == state)
+                {
+                    return;
+                }
 
                 state = value;
                 StateChanged?.Invoke(this, new StateChangedEventArgs(state));

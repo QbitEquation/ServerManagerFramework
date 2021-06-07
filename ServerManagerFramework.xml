@@ -79,75 +79,42 @@
             </summary>
             <param name="iconPath">The path and name of the icon file.</param>
         </member>
-        <member name="T:ServerManagerFramework.RequireProgramAttribute">
+        <member name="T:ServerManagerFramework.RequireAttribute">
             <summary>
-            Indicated that a server requires certain program installed in order to run.
+            Indicated that an addon requires something installed in order to run.
             </summary>
         </member>
-        <member name="P:ServerManagerFramework.RequireProgramAttribute.ProgramName">
+        <member name="P:ServerManagerFramework.RequireAttribute.ItemName">
             <summary>
-            The name of the program that is required.
+            The name of the item that is required.
             </summary>
         </member>
-        <member name="P:ServerManagerFramework.RequireProgramAttribute.MinVersion">
+        <member name="P:ServerManagerFramework.RequireAttribute.ItemType">
             <summary>
-            The minimum version that should be installed.
+            The type of the item that is required.
             </summary>
         </member>
-        <member name="P:ServerManagerFramework.RequireProgramAttribute.MaxVersion">
+        <member name="P:ServerManagerFramework.RequireAttribute.MinVersion">
             <summary>
-            The Maximum version that can be installed.
+            The minimum version that should be installed. (Major.Minor.Build.Revision)
             </summary>
         </member>
-        <member name="P:ServerManagerFramework.RequireProgramAttribute.DownloadURL">
+        <member name="P:ServerManagerFramework.RequireAttribute.MaxVersion">
             <summary>
-            The direct download URL of the program.
+            The Maximum version that can be installed. (Major.Minor.Build.Revision)
             </summary>
         </member>
-        <member name="M:ServerManagerFramework.RequireProgramAttribute.#ctor(System.String)">
+        <member name="P:ServerManagerFramework.RequireAttribute.DownloadURL">
+            <summary>
+            The direct download URL of the item.
+            </summary>
+        </member>
+        <member name="M:ServerManagerFramework.RequireAttribute.#ctor(System.String,ServerManagerFramework.ItemType)">
             <summary>
             Initializes a new instance of this class.
             </summary>
-            <param name="programName">The name of the required program.</param>
-        </member>
-        <member name="M:ServerManagerFramework.RequireProgramAttribute.#ctor(System.String,System.String)">
-            <summary>
-            Initializes a new instance of this class.
-            </summary>
-            <param name="programName">The name of the required program.</param>
-            <param name="downloadURL">The direct download URL of the required program. This should directly download the installer. The installer should be silently executeable if possible.</param>
-        </member>
-        <member name="M:ServerManagerFramework.RequireProgramAttribute.#ctor(System.String,System.Version)">
-            <summary>
-            Initializes a new instance of this class.
-            </summary>
-            <param name="programName">The name of the required program.</param>
-            <param name="minVersion">The minimum version of the required program.</param>
-        </member>
-        <member name="M:ServerManagerFramework.RequireProgramAttribute.#ctor(System.String,System.Version,System.String)">
-            <summary>
-            Initializes a new instance of this class.
-            </summary>
-            <param name="programName">The name of the required program.</param>
-            <param name="minVersion">The minimum version of the required program.</param>
-            <param name="downloadURL">The direct download URL of the required program. This should directly download the installer. The installer should be silently executeable if possible.</param>
-        </member>
-        <member name="M:ServerManagerFramework.RequireProgramAttribute.#ctor(System.String,System.Version,System.Version)">
-            <summary>
-            Initializes a new instance of this class.
-            </summary>
-            <param name="programName">The name of the required program.</param>
-            <param name="minVersion">The minimum version of the required program.</param>
-            <param name="maxVersion">The maximum version of the required program.</param>
-        </member>
-        <member name="M:ServerManagerFramework.RequireProgramAttribute.#ctor(System.String,System.Version,System.Version,System.String)">
-            <summary>
-            Initializes a new instance of this class.
-            </summary>
-            <param name="programName">The name of the required program.</param>
-            <param name="minVersion">The minimum version of the required program.</param>
-            <param name="maxVersion">The maximum version of the required program.</param>
-            <param name="downloadURL">The direct download URL of the required program. This should directly download the installer. The installer should be silently executeable if possible.</param>
+            <param name="itemName">The name of the required item.</param>
+            <param name="itemType">The type of the required item.</param>
         </member>
         <member name="T:ServerManagerFramework.Config">
             <summary>
@@ -206,6 +173,26 @@
         <member name="F:ServerManagerFramework.ArgumentPosition.right">
             <summary>
             Argument is always one of the last ones to be read.
+            </summary>
+        </member>
+        <member name="T:ServerManagerFramework.ItemType">
+            <summary>
+            The type of an item.
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.ItemType.ExeInstaller">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.ItemType.MsiInstaller">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.ItemType.Addon">
+            <summary>
+            
             </summary>
         </member>
         <member name="T:ServerManagerFramework.MessageType">

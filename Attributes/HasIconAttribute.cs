@@ -2,7 +2,7 @@
 
 namespace ServerManagerFramework
 {
-    
+
     /// <summary>
     /// Indicates that a class has an icon that should be displayed in serverInfo.
     /// </summary>
@@ -17,7 +17,7 @@ namespace ServerManagerFramework
         /// <summary>
         /// Use default icon name. [server-icon.png]
         /// </summary>
-        public HasIconAttribute() 
+        public HasIconAttribute()
         {
             IconPath = "server-icon.png";
         }
