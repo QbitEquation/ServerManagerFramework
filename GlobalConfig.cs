@@ -27,23 +27,20 @@ namespace ServerManagerFramework
 
         private static Dictionary<string, string> KeyValues { get; } = new();
 
-        private const string configPath = @"C:\Users\itzto\AppData\Roaming\Server-Manager\global.config";
+        private const string configPath = @"\global.config";
 
         /// <summary>
         /// Loads the config settings.
         /// </summary>
         public static void Load()
         {
-            if (!Directory.Exists(ManagerPath))
-            {
-                Directory.CreateDirectory(ManagerPath);
-            }
+            Directory.CreateDirectory(ManagerPath);
 
-            if (!File.Exists(configPath))
+            if (!File.Exists(ManagerPath + configPath))
             {
-                File.Create(configPath).Dispose();
+                File.Create(ManagerPath + configPath).Dispose();
             }
-            string text = File.ReadAllText(configPath);
+            string text = File.ReadAllText(ManagerPath + configPath);
             string[] lines = text.Split('\n');
 
             foreach (string line in lines)
