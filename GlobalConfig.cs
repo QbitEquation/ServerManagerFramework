@@ -34,6 +34,11 @@ namespace ServerManagerFramework
         /// </summary>
         public static void Load()
         {
+            if (!Directory.Exists(ManagerPath))
+            {
+                Directory.CreateDirectory(ManagerPath);
+            }
+
             if (!File.Exists(configPath))
             {
                 File.Create(configPath).Dispose();
