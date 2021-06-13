@@ -1,24 +1,205 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Timers;
+using System.Windows;
 
 namespace ServerManagerFramework
 {
     /// <summary>
     /// Base class for server processes that includes input and output handling.
     /// </summary>
-    /// <typeparam name="TCommandLineObject">The object that should be used to store the command line strings</typeparam>
-    public class ServerProcess<TCommandLineObject> : ServerProcess, ICommandLineInput, ICommandLineOutput<TCommandLineObject> where TCommandLineObject : IHasString, new()
+    public class ServerProcess : IServer, ICommandLineInput, ICommandLineOutput
     {
         /// <summary>
         /// Initializes a new Instance of this class.
         /// </summary>
         /// <param name="fileName">The name of the file that is used to start the server.</param>
-        public ServerProcess(string fileName) : base(fileName)
+        public ServerProcess(string fileName)
         {
             StartInfo.RedirectStandardInput = true;
             StartInfo.RedirectStandardOutput = true;
+            StartInfo.UseShellExecute = false;
+            StartInfo.FileName = fileName;
+
+            Application.Current.Exit += OnExit;
         }
+
+        /// <summary>
+        /// The directory of this server.
+        /// </summary>
+        public string Directory
+        {
+            get => StartInfo.WorkingDirectory;
+            init
+            {
+                StartInfo.WorkingDirectory = value;
+            }
+        }
+
+        /// <summary>
+        /// The System.Diagnostics.Process of this server.
+        /// </summary>
+        protected Process Process { get; set; }
+
+        /// <summary>
+        /// The System.Diagnostics.ProcessStartInfo of this System.Diagnostics.Process.
+        /// </summary>
+        protected ProcessStartInfo StartInfo { get; } = new ProcessStartInfo();
+
+        private int ProcessID { get; set; } = -1;
+
+        #region Arguments
+        private readonly Arguments arguments = new();
+
+        /// <summary>
+        /// The start ServerManagerFramework.Arguments of this server.
+        /// </summary>
+        protected Arguments Arguments => arguments;
+
+        /// <summary>
+        /// Add an argument.
+        /// </summary>
+        /// <param name="argument">The argument to add.</param>
+        public void AddArgument(string argument)
+        {
+            Arguments.Add(argument, ArgumentPosition.center);
+        }
+
+        /// <summary>
+        /// Insert an argument at a certain position.
+        /// </summary>
+        /// <param name="index">The position of this argument.</param>
+        /// <param name="argument">The argument to insert.</param>
+        public void InsertArgument(int index, string argument)
+        {
+            Arguments.Insert(index, argument, ArgumentPosition.center);
+        }
+
+        /// <summary>
+        /// Remove an argument.
+        /// </summary>
+        /// <param name="argument">The argument to remove.</param>
+        public void RemoveArgument(string argument)
+        {
+            Arguments.Remove(argument);
+        }
+        #endregion
+
+        #region Starting / Stopping
+        private State state = State.stopped;
+
+        /// <summary>
+        /// The current ServerManagerFramework.State of this server.
+        /// </summary>
+        public State State
+        {
+            get => state;
+            protected set
+            {
+                if (value == state)
+                {
+                    return;
+                }
+
+                state = value;
+                StateChanged?.Invoke(this, new StateChangedEventArgs(state));
+            }
+        }
+
+        /// <summary>
+        /// Fires when the ServerManagerFramework.State of this server changes.
+        /// </summary>
+        public event StateChangedEventHandler StateChanged;
+
+        /// <summary>
+        /// Start this server.
+        /// </summary>
+        public virtual void Start()
+        {
+            if (State != State.stopped || string.IsNullOrWhiteSpace(StartInfo.FileName))
+            {
+                return;
+            }
+
+            StartInfo.Arguments = Arguments.ToString();
+
+            Process = new Process
+            {
+                StartInfo = StartInfo,
+                EnableRaisingEvents = true
+            };
+            Process.Exited += Exited;
+
+            Process.Start();
+            ProcessID = Process.Id;
+            State = State.started;
+
+            Process.BeginOutputReadLine();
+            Process.OutputDataReceived += OutputDataReceived;
+
+            Timer clearCheck = new(60000);
+            clearCheck.Elapsed += delegate
+            {
+                Application.Current.Dispatcher.Invoke(delegate
+                {
+                    if (consoleLines.Count > 1000)
+                    {
+                        consoleLines.Clear();
+                    }
+                });
+            };
+            clearCheck.Start();
+        }
+
+        /// <summary>
+        /// Stop this server.
+        /// </summary>
+        public virtual void Stop()
+        {
+            if (State == State.stopped)
+            {
+                return;
+            }
+
+            DestroyProcess();
+        }
+
+        /// <summary>
+        /// Destroy this server process.
+        /// </summary>
+        protected void DestroyProcess()
+        {
+            if (Process.HasExited == false)
+            {
+                Process.Kill();
+            }
+
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                State = State.stopped;
+            });
+            Process.Dispose();
+            Process = null;
+        }
+
+        private void Exited(object sender, EventArgs e)
+        {
+            DestroyProcess();
+        }
+        private void OnExit(object sender, ExitEventArgs args)
+        {
+            if (ProcessID == -1)
+            {
+                return;
+            }
+
+            Process process = Process.GetProcessById(ProcessID);
+
+            process.Kill();
+        }
+        #endregion
 
         #region Input
         /// <summary>
@@ -29,7 +210,7 @@ namespace ServerManagerFramework
         {
             if (State != State.started)
             {
-                throw new ProcessNotRunningException();
+                return;
             }
 
             Process.StandardInput.WriteLine(value);
@@ -40,12 +221,12 @@ namespace ServerManagerFramework
         /// <summary>
         /// The output lines.
         /// </summary>
-        protected readonly ObservableCollection<TCommandLineObject> consoleLines = new();
+        protected readonly ObservableCollection<CommandLine> consoleLines = new();
 
         /// <summary>
         /// The output lines.
         /// </summary>
-        public IEnumerable<TCommandLineObject> ConsoleLines => consoleLines;
+        public IEnumerable<CommandLine> ConsoleLines => consoleLines;
 
         /// <summary>
         /// Catches output data of this process.
@@ -54,23 +235,31 @@ namespace ServerManagerFramework
         /// <param name="e">The process output data.</param>
         protected virtual void OutputDataReceived(object sender, DataReceivedEventArgs e)
         {
-            TCommandLineObject data = new()
+            Application.Current.Dispatcher.Invoke(delegate
             {
-                String = e.Data
-            };
+                CommandLine line = new()
+                {
+                    Message = e.Data,
+                    FontColor = SMR.SFontColorBrush,
+                };
 
-            consoleLines.Add(data);
+                consoleLines.Add(line);
+            });
         }
 
         /// <summary>
-        /// Start this server.
+        /// Adds a line to the console output
         /// </summary>
-        public override void Start()
+        public void AddLine(CommandLine line)
         {
-            base.Start();
-
-            Process.BeginOutputReadLine();
-            Process.OutputDataReceived += OutputDataReceived;
+            consoleLines.Add(line);
+        }
+        /// <summary>
+        /// Clears all console line entries.
+        /// </summary>
+        public void ClearLines()
+        {
+            consoleLines.Clear();
         }
         #endregion
     }

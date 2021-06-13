@@ -96,12 +96,12 @@
         </member>
         <member name="P:ServerManagerFramework.RequireAttribute.MinVersion">
             <summary>
-            The minimum version that should be installed. (Major.Minor.Build.Revision)
+            The minimum version that should be installed. (MajorREQUIRED.MinorREQUIRED.Build.Revision)
             </summary>
         </member>
         <member name="P:ServerManagerFramework.RequireAttribute.MaxVersion">
             <summary>
-            The Maximum version that can be installed. (Major.Minor.Build.Revision)
+            The Maximum version that can be installed. (MajorREQUIRED.MinorREQUIRED.Build.Revision)
             </summary>
         </member>
         <member name="P:ServerManagerFramework.RequireAttribute.DownloadURL">
@@ -115,6 +115,26 @@
             </summary>
             <param name="itemName">The name of the required item.</param>
             <param name="itemType">The type of the required item.</param>
+        </member>
+        <member name="T:ServerManagerFramework.CommandLine">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.CommandLine.Message">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.CommandLine.FontStyle">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.CommandLine.FontColor">
+            <summary>
+            
+            </summary>
         </member>
         <member name="T:ServerManagerFramework.Config">
             <summary>
@@ -293,6 +313,55 @@
             Initializes a new instance of this class.
             </summary>
         </member>
+        <member name="T:ServerManagerFramework.GlobalConfig">
+            <summary>
+            Saves and loads global settings.
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.GlobalConfig.ManagerPath">
+            <summary>
+            The path to the Server-Manager folder in AppData (Roaming).
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.GlobalConfig.ServersPath">
+            <summary>
+            The configured path to the server folder.
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.GlobalConfig.BackupsPath">
+            <summary>
+            The configured path to the backups folder.
+            </summary>
+        </member>
+        <member name="M:ServerManagerFramework.GlobalConfig.Load">
+            <summary>
+            Loads the config settings.
+            </summary>
+        </member>
+        <member name="M:ServerManagerFramework.GlobalConfig.Save">
+            <summary>
+            Saves the config settings.
+            </summary>
+        </member>
+        <member name="M:ServerManagerFramework.GlobalConfig.GetValue(System.String)">
+            <summary>
+            Gets a value for a given key. Returns null if none is found.
+            </summary>
+            <param name="key">The key to search for.</param>
+        </member>
+        <member name="M:ServerManagerFramework.GlobalConfig.SetValue(System.String,System.String)">
+            <summary>
+            Sets the value of a given key or creates a new one.
+            </summary>
+            <param name="key">The key for the value.</param>
+            <param name="value">The value that should be stored.</param>
+        </member>
+        <member name="M:ServerManagerFramework.GlobalConfig.RemoveValue(System.String)">
+            <summary>
+            Removes a value.
+            </summary>
+            <param name="key">The key of the value that should be removed.</param>
+        </member>
         <member name="T:ServerManagerFramework.ICommandLineInput">
             <summary>
             Enables UI implemenatation of inputting console text to a server.
@@ -304,15 +373,24 @@
             </summary>
             <param name="value">The string to write.</param>
         </member>
-        <member name="T:ServerManagerFramework.ICommandLineOutput`1">
+        <member name="T:ServerManagerFramework.ICommandLineOutput">
             <summary>
             Enables UI implemenatation of getting console output from a server.
             </summary>
-            <typeparam name="TCommandLineObject">The object that should be used to store the command line strings</typeparam>
         </member>
-        <member name="P:ServerManagerFramework.ICommandLineOutput`1.ConsoleLines">
+        <member name="P:ServerManagerFramework.ICommandLineOutput.ConsoleLines">
             <summary>
             Gets all console lines of a server.
+            </summary>
+        </member>
+        <member name="M:ServerManagerFramework.ICommandLineOutput.AddLine(ServerManagerFramework.CommandLine)">
+            <summary>
+            Adds a line to the console output
+            </summary>
+        </member>
+        <member name="M:ServerManagerFramework.ICommandLineOutput.ClearLines">
+            <summary>
+            Clears all console line entries.
             </summary>
         </member>
         <member name="T:ServerManagerFramework.IHasDirectory">
@@ -380,50 +458,16 @@
             The string that contains the console line data.
             </summary>
         </member>
-        <member name="T:ServerManagerFramework.ServerProcess`1">
+        <member name="T:ServerManagerFramework.ServerProcess">
             <summary>
             Base class for server processes that includes input and output handling.
             </summary>
-            <typeparam name="TCommandLineObject">The object that should be used to store the command line strings</typeparam>
         </member>
-        <member name="M:ServerManagerFramework.ServerProcess`1.#ctor(System.String)">
+        <member name="M:ServerManagerFramework.ServerProcess.#ctor(System.String)">
             <summary>
             Initializes a new Instance of this class.
             </summary>
             <param name="fileName">The name of the file that is used to start the server.</param>
-        </member>
-        <member name="M:ServerManagerFramework.ServerProcess`1.WriteLine(System.String)">
-            <summary>
-            Write a line to the InputStream.
-            </summary>
-            <param name="value">The string to write.</param>
-        </member>
-        <member name="F:ServerManagerFramework.ServerProcess`1.consoleLines">
-            <summary>
-            The output lines.
-            </summary>
-        </member>
-        <member name="P:ServerManagerFramework.ServerProcess`1.ConsoleLines">
-            <summary>
-            The output lines.
-            </summary>
-        </member>
-        <member name="M:ServerManagerFramework.ServerProcess`1.OutputDataReceived(System.Object,System.Diagnostics.DataReceivedEventArgs)">
-            <summary>
-            Catches output data of this process.
-            </summary>
-            <param name="sender">The process that generated output.</param>
-            <param name="e">The process output data.</param>
-        </member>
-        <member name="M:ServerManagerFramework.ServerProcess`1.Start">
-            <summary>
-            Start this server.
-            </summary>
-        </member>
-        <member name="T:ServerManagerFramework.ServerProcess">
-            <summary>
-            Base class for server processes. Not required to run a server.
-            </summary>
         </member>
         <member name="P:ServerManagerFramework.ServerProcess.Directory">
             <summary>
@@ -439,12 +483,6 @@
             <summary>
             The System.Diagnostics.ProcessStartInfo of this System.Diagnostics.Process.
             </summary>
-        </member>
-        <member name="M:ServerManagerFramework.ServerProcess.#ctor(System.String)">
-            <summary>
-            Initializes a new instance of this class.
-            </summary>
-            <param name="fileName">The name of the file that is used to start this server.</param>
         </member>
         <member name="P:ServerManagerFramework.ServerProcess.Arguments">
             <summary>
@@ -493,6 +531,534 @@
         <member name="M:ServerManagerFramework.ServerProcess.DestroyProcess">
             <summary>
             Destroy this server process.
+            </summary>
+        </member>
+        <member name="M:ServerManagerFramework.ServerProcess.WriteLine(System.String)">
+            <summary>
+            Write a line to the InputStream.
+            </summary>
+            <param name="value">The string to write.</param>
+        </member>
+        <member name="F:ServerManagerFramework.ServerProcess.consoleLines">
+            <summary>
+            The output lines.
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.ServerProcess.ConsoleLines">
+            <summary>
+            The output lines.
+            </summary>
+        </member>
+        <member name="M:ServerManagerFramework.ServerProcess.OutputDataReceived(System.Object,System.Diagnostics.DataReceivedEventArgs)">
+            <summary>
+            Catches output data of this process.
+            </summary>
+            <param name="sender">The process that generated output.</param>
+            <param name="e">The process output data.</param>
+        </member>
+        <member name="M:ServerManagerFramework.ServerProcess.AddLine(ServerManagerFramework.CommandLine)">
+            <summary>
+            Adds a line to the console output
+            </summary>
+        </member>
+        <member name="M:ServerManagerFramework.ServerProcess.ClearLines">
+            <summary>
+            Clears all console line entries.
+            </summary>
+        </member>
+        <member name="T:ServerManagerFramework.SMR">
+            <summary>
+            Server Manager Resources
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.DataPath">
+            <summary>
+            Path for resources inside the project folder
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.AppDirectory">
+            <summary>
+            Path to the folder where the Application is installed in
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.Transparent">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.Hover">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.White">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.Red">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.RedHover">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.Stopping">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.Green">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.GreenHover">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.Starting">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.Input">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.InputHover">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.DarkGray">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.Gray">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.LightGray">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.FontColor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.GrayHover">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.Line">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.ScrollBarThumbHover">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.Brightness1">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.Brightness2">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.Brightness3">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.Brightness4">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.Brightness5">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.Brightness6">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.TransparentBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.HoverBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.WhiteBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.RedBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.RedHoverBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.StoppingBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.GreenBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.GreenHoverBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.StartingBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.InputBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.InputHoverBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.DarkGrayBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.GrayBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.LightGrayBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.FontColorBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.GrayHoverBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.LineBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.ScrollBarThumbHoverBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.Brightness1Brush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.Brightness2Brush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.Brightness3Brush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.Brightness4Brush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.Brightness5Brush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.Brightness6Brush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.SMR.transparentBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.SMR.hoverBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.SMR.whiteBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.SMR.redBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.SMR.redHoverBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.SMR.stoppingBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.SMR.greenBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.SMR.greenHoverBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.SMR.startingBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.SMR.inputBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.SMR.inputHoverBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.SMR.darkGrayBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.SMR.grayBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.SMR.lightGrayBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.SMR.fontColorBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.SMR.grayHoverBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.SMR.lineBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.SMR.scrollBarThumbHoverBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.SMR.brightness1Brush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.SMR.brightness2Brush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.SMR.brightness3Brush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.SMR.brightness4Brush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.SMR.brightness5Brush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ServerManagerFramework.SMR.brightness6Brush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.STransparentBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.SHoverBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.SWhiteBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.SRedBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.SRedHoverBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.SStoppingBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.SGreenBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.SGreenHoverBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.SStartingBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.SInputBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.SInputHoverBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.SDarkGrayBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.SGrayBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.SLightGrayBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.SFontColorBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.SGrayHoverBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.SLineBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.SScrollBarThumbHoverBrush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.SBrightness1Brush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.SBrightness2Brush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.SBrightness3Brush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.SBrightness4Brush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.SBrightness5Brush">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ServerManagerFramework.SMR.SBrightness6Brush">
+            <summary>
+            
             </summary>
         </member>
     </members>
