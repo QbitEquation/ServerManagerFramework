@@ -15,13 +15,11 @@ namespace ServerManagerFramework
         /// <summary>
         /// Initializes a new Instance of this class.
         /// </summary>
-        /// <param name="fileName">The name of the file that is used to start the server.</param>
-        public ServerProcess(string fileName)
+        public ServerProcess()
         {
             StartInfo.RedirectStandardInput = true;
             StartInfo.RedirectStandardOutput = true;
             StartInfo.UseShellExecute = false;
-            StartInfo.FileName = fileName;
 
             Application.Current.Exit += OnExit;
         }
@@ -37,6 +35,12 @@ namespace ServerManagerFramework
                 StartInfo.WorkingDirectory = value;
             }
         }
+
+        /// <summary>
+        /// Is called when everything is initialized.
+        /// </summary>
+        #pragma warning disable 0067
+        public event EventHandler Initialized;
 
         /// <summary>
         /// The System.Diagnostics.Process of this server.
@@ -132,7 +136,7 @@ namespace ServerManagerFramework
             };
             Process.Exited += Exited;
 
-            Process.Start();
+            /*Process.Start();
             ProcessID = Process.Id;
             State = State.started;
 
@@ -150,7 +154,7 @@ namespace ServerManagerFramework
                     }
                 });
             };
-            clearCheck.Start();
+            clearCheck.Start();*/
         }
 
         /// <summary>

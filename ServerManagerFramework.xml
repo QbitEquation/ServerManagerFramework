@@ -403,6 +403,11 @@
             The directory of this server.
             </summary>
         </member>
+        <member name="E:ServerManagerFramework.IHasDirectory.Initialized">
+            <summary>
+            Is called when everything is initialized.
+            </summary>
+        </member>
         <member name="T:ServerManagerFramework.IHasString">
             <summary>
             The base object for console line entries.
@@ -463,15 +468,19 @@
             Base class for server processes that includes input and output handling.
             </summary>
         </member>
-        <member name="M:ServerManagerFramework.ServerProcess.#ctor(System.String)">
+        <member name="M:ServerManagerFramework.ServerProcess.#ctor">
             <summary>
             Initializes a new Instance of this class.
             </summary>
-            <param name="fileName">The name of the file that is used to start the server.</param>
         </member>
         <member name="P:ServerManagerFramework.ServerProcess.Directory">
             <summary>
             The directory of this server.
+            </summary>
+        </member>
+        <member name="E:ServerManagerFramework.ServerProcess.Initialized">
+            <summary>
+            Is called when everything is initialized.
             </summary>
         </member>
         <member name="P:ServerManagerFramework.ServerProcess.Process">
