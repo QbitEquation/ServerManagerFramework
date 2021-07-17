@@ -1,11 +1,11 @@
 ﻿using System.Windows.Media;
 
-namespace ServerManagerFramework
+namespace ServerManagerFramework.ServerInfo
 {
     /// <summary>
     /// 
     /// </summary>
-    public struct CommandLine
+    public struct TerminalLine
     {
         /// <summary>
         /// 
@@ -19,5 +19,14 @@ namespace ServerManagerFramework
         /// 
         /// </summary>
         public SolidColorBrush FontColor { get; set; }
+
+        /// <summary>
+        /// Returns a string that represents the current object.
+        /// </summary>
+        /// <returns>A string that represents the current object.</returns>
+        public override string ToString()
+        {
+            return Message;
+        }
     }
 }

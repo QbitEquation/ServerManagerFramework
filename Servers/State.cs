@@ -1,4 +1,4 @@
-﻿namespace ServerManagerFramework
+﻿namespace ServerManagerFramework.Servers
 {
     /// <summary>
     /// The state of a server.

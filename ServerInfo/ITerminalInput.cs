@@ -1,9 +1,9 @@
-﻿namespace ServerManagerFramework
+﻿namespace ServerManagerFramework.ServerInfo
 {
     /// <summary>
-    /// Enables UI implemenatation of inputting console text to a server.
+    /// Enables UI implemenatation of inputting text to a server.
     /// </summary>
-    public interface ICommandLineInput
+    public interface ITerminalInput
     {
         /// <summary>
         /// Writes a line of text to a server process.

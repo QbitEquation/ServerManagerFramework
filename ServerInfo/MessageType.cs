@@ -1,7 +1,7 @@
-﻿namespace ServerManagerFramework
+﻿namespace ServerManagerFramework.ServerInfo
 {
     /// <summary>
-    /// The type of a console line message.
+    /// The type of a terminal message.
     /// </summary>
     public enum MessageType
     {

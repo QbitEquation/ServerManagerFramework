@@ -1,4 +1,4 @@
-﻿namespace ServerManagerFramework
+﻿namespace ServerManagerFramework.Servers
 {
     /// <summary>
     /// Base class for all servers that can be started or stopped.
@@ -8,21 +8,26 @@
         /// <summary>
         /// Start this server.
         /// </summary>
-        void Start();
+        public void Start();
 
         /// <summary>
         /// Stop this server.
         /// </summary>
-        void Stop();
+        public void Stop();
 
         /// <summary>
-        /// The current ServerManagerFramework.State of this server.
+        /// Destroy this server process immediately.
         /// </summary>
-        State State { get; }
+        public void DestroyProcess();
+
+        /// <summary>
+        /// Destroy this server process immediately.
+        /// </summary>
+        public State State { get; }
 
         /// <summary>
         /// Fires when the ServerManagerFramework.State of this server changes.
         /// </summary>
-        event StateChangedEventHandler StateChanged;
+        public event StateChangedEventHandler StateChanged;
     }
 }

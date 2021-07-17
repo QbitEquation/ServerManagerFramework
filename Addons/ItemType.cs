@@ -1,4 +1,4 @@
-﻿namespace ServerManagerFramework
+﻿namespace ServerManagerFramework.Addons
 {
     /// <summary>
     /// The type of an item.

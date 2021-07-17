@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ServerManagerFramework
+namespace ServerManagerFramework.Exceptions
 {
     /// <summary>
     /// The exception that is thrown when a process is running even though it should not be.

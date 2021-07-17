@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ServerManagerFramework
+namespace ServerManagerFramework.Servers
 {
     /// <summary>
     /// EventArgs that contain the new ServerManagerFramework.State of a server.

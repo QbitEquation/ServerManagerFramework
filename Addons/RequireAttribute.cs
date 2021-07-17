@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ServerManagerFramework
+namespace ServerManagerFramework.Addons
 {
     /// <summary>
     /// Indicated that an addon requires something installed in order to run.

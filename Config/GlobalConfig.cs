@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServerManagerFramework
+namespace ServerManagerFramework.Config
 {
     /// <summary>
     /// Saves and loads global settings.

@@ -1,28 +1,31 @@
-﻿using System;
+﻿using ServerManagerFramework.ServerInfo;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Timers;
 using System.Windows;
 
-namespace ServerManagerFramework
+namespace ServerManagerFramework.Servers
 {
     /// <summary>
     /// Base class for server processes that includes input and output handling.
     /// </summary>
-    public class ServerProcess : IServer, ICommandLineInput, ICommandLineOutput
+    public class Server : IServer, ITerminalInput, ITerminalOutput
     {
         /// <summary>
         /// Initializes a new Instance of this class.
         /// </summary>
-        public ServerProcess()
+        public Server()
         {
-            StartInfo.RedirectStandardInput = true;
-            StartInfo.RedirectStandardOutput = true;
-            StartInfo.UseShellExecute = false;
-
             Application.Current.Exit += OnExit;
         }
+
+        /// <summary>
+        /// The configuration for this server.
+        /// </summary>
+        public Config.Config Config { get; init; }
 
         /// <summary>
         /// The directory of this server.
@@ -30,17 +33,18 @@ namespace ServerManagerFramework
         public string Directory
         {
             get => StartInfo.WorkingDirectory;
-            init
-            {
-                StartInfo.WorkingDirectory = value;
-            }
+            init => StartInfo.WorkingDirectory = value;
         }
 
         /// <summary>
         /// Is called when everything is initialized.
         /// </summary>
-        #pragma warning disable 0067
-        public event EventHandler Initialized;
+        public virtual void Initialized() { }
+
+        /// <summary>
+        /// True when the server is initialized.
+        /// </summary>
+        public bool IsInitialized { get; private set; }
 
         /// <summary>
         /// The System.Diagnostics.Process of this server.
@@ -50,46 +54,18 @@ namespace ServerManagerFramework
         /// <summary>
         /// The System.Diagnostics.ProcessStartInfo of this System.Diagnostics.Process.
         /// </summary>
-        protected ProcessStartInfo StartInfo { get; } = new ProcessStartInfo();
-
-        private int ProcessID { get; set; } = -1;
-
-        #region Arguments
-        private readonly Arguments arguments = new();
-
-        /// <summary>
-        /// The start ServerManagerFramework.Arguments of this server.
-        /// </summary>
-        protected Arguments Arguments => arguments;
-
-        /// <summary>
-        /// Add an argument.
-        /// </summary>
-        /// <param name="argument">The argument to add.</param>
-        public void AddArgument(string argument)
+        protected ProcessStartInfo StartInfo { get; } = new()
         {
-            Arguments.Add(argument, ArgumentPosition.center);
-        }
+            RedirectStandardInput = true,
+            RedirectStandardOutput = true,
+            UseShellExecute = false,
+            CreateNoWindow = true
+        };
 
         /// <summary>
-        /// Insert an argument at a certain position.
+        /// 
         /// </summary>
-        /// <param name="index">The position of this argument.</param>
-        /// <param name="argument">The argument to insert.</param>
-        public void InsertArgument(int index, string argument)
-        {
-            Arguments.Insert(index, argument, ArgumentPosition.center);
-        }
-
-        /// <summary>
-        /// Remove an argument.
-        /// </summary>
-        /// <param name="argument">The argument to remove.</param>
-        public void RemoveArgument(string argument)
-        {
-            Arguments.Remove(argument);
-        }
-        #endregion
+        protected int ProcessID { get; set; } = -1;
 
         #region Starting / Stopping
         private State state = State.stopped;
@@ -127,8 +103,6 @@ namespace ServerManagerFramework
                 return;
             }
 
-            StartInfo.Arguments = Arguments.ToString();
-
             Process = new Process
             {
                 StartInfo = StartInfo,
@@ -136,25 +110,25 @@ namespace ServerManagerFramework
             };
             Process.Exited += Exited;
 
-            /*Process.Start();
+            Process.Start();
             ProcessID = Process.Id;
             State = State.started;
 
             Process.BeginOutputReadLine();
             Process.OutputDataReceived += OutputDataReceived;
 
-            Timer clearCheck = new(60000);
+            Timer clearCheck = new(15000);
             clearCheck.Elapsed += delegate
             {
                 Application.Current.Dispatcher.Invoke(delegate
                 {
-                    if (consoleLines.Count > 1000)
+                    if (terminalLines.Count > 1000)
                     {
-                        consoleLines.Clear();
+                        ClearLines();
                     }
                 });
             };
-            clearCheck.Start();*/
+            clearCheck.Start();
         }
 
         /// <summary>
@@ -171,9 +145,9 @@ namespace ServerManagerFramework
         }
 
         /// <summary>
-        /// Destroy this server process.
+        /// Destroy this server process immediately.
         /// </summary>
-        protected void DestroyProcess()
+        public void DestroyProcess()
         {
             if (Process.HasExited == false)
             {
@@ -188,10 +162,23 @@ namespace ServerManagerFramework
             Process = null;
         }
 
-        private void Exited(object sender, EventArgs e)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void Exited(object sender, EventArgs e)
         {
             DestroyProcess();
+
+            ClearLines();
         }
+
+        /// <summary>
+        /// Is called when Server-Manager exits.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         private void OnExit(object sender, ExitEventArgs args)
         {
             if (ProcessID == -1)
@@ -199,9 +186,10 @@ namespace ServerManagerFramework
                 return;
             }
 
-            Process process = Process.GetProcessById(ProcessID);
+            Process[] processlist = Process.GetProcesses();
+            Process serverProcess = processlist.FirstOrDefault(p => p.Id == ProcessID);
 
-            process.Kill();
+            serverProcess?.Kill();
         }
         #endregion
 
@@ -225,12 +213,12 @@ namespace ServerManagerFramework
         /// <summary>
         /// The output lines.
         /// </summary>
-        protected readonly ObservableCollection<CommandLine> consoleLines = new();
+        protected readonly ObservableCollection<TerminalLine> terminalLines = new();
 
         /// <summary>
         /// The output lines.
         /// </summary>
-        public IEnumerable<CommandLine> ConsoleLines => consoleLines;
+        public IEnumerable<TerminalLine> TerminalLines => terminalLines;
 
         /// <summary>
         /// Catches output data of this process.
@@ -239,31 +227,37 @@ namespace ServerManagerFramework
         /// <param name="e">The process output data.</param>
         protected virtual void OutputDataReceived(object sender, DataReceivedEventArgs e)
         {
+            if (string.IsNullOrEmpty(e.Data))
+            {
+                return;
+            }
+
             Application.Current.Dispatcher.Invoke(delegate
             {
-                CommandLine line = new()
+                TerminalLine line = new()
                 {
                     Message = e.Data,
                     FontColor = SMR.SFontColorBrush,
                 };
 
-                consoleLines.Add(line);
+                terminalLines.Add(line);
             });
         }
 
         /// <summary>
-        /// Adds a line to the console output
+        /// Adds a line to the terminal output
         /// </summary>
-        public void AddLine(CommandLine line)
+        public void AddLine(TerminalLine line)
         {
-            consoleLines.Add(line);
+            terminalLines.Add(line);
         }
+
         /// <summary>
-        /// Clears all console line entries.
+        /// Clears all terminal line entries.
         /// </summary>
-        public void ClearLines()
+        public virtual void ClearLines()
         {
-            consoleLines.Clear();
+            Application.Current.Dispatcher.Invoke(terminalLines.Clear);
         }
         #endregion
     }

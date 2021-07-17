@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ServerManagerFramework
+namespace ServerManagerFramework.Servers
 {
 
     /// <summary>
@@ -12,23 +12,21 @@ namespace ServerManagerFramework
         /// <summary>
         /// The path of the icon file of a server. From ServerFileName/[iconName.fileExtension]
         /// </summary>
-        public string IconPath { get; }
+        public string IconPath { get; set; } = "server-icon.png";
+
+        /// <summary>
+        /// The file extensions that are allowed.
+        /// </summary>
+        public string Filter { get; set; } = "All files (*.*)|*.*";
+
+        /// <summary>
+        /// The tooltip that is shown when hovering over the icon button
+        /// </summary>
+        public string ToolTip { get; set; }
 
         /// <summary>
         /// Use default icon name. [server-icon.png]
         /// </summary>
-        public HasIconAttribute()
-        {
-            IconPath = "server-icon.png";
-        }
-
-        /// <summary>
-        /// Specify a custom icon name.
-        /// </summary>
-        /// <param name="iconPath">The path and name of the icon file.</param>
-        public HasIconAttribute(string iconPath)
-        {
-            IconPath = iconPath;
-        }
+        public HasIconAttribute() { }
     }
 }

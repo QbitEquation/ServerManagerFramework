@@ -1,4 +1,4 @@
-﻿namespace ServerManagerFramework
+﻿namespace ServerManagerFramework.Servers
 {
     /// <summary>
     /// EventHandler for handling changes of a server ServerManagerFramework.State.

@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 
-namespace ServerManagerFramework
+namespace ServerManagerFramework.Config
 {
     /// <summary>
-    /// Encoder and decoder class for server-manager.prefs files.
+    /// Encoder and decoder class for server-manager.config files.
     /// </summary>
     public struct Config
     {
@@ -45,7 +45,7 @@ namespace ServerManagerFramework
         }
 
         /// <summary>
-        /// Gets a value for a given key. Returns null if none is found.
+        /// Gets the value for a given key. Returns null if none is found.
         /// </summary>
         /// <param name="key">The key to search for.</param>
         /// <returns></returns>
